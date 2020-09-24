@@ -83,5 +83,5 @@ $ systemctl restart ethvaltgbot.service
 ## What to do if something not working?
 Find in bot.py telebot.logger.setLevel(logging.ERROR) and change ERROR to DEBUG, restart tontgbot service and execute
   ```sh
-$ journalctl -e -u tontgbot > /opt/tontgbot/servicelog.log
+$ journalctl -e -u ethvaltgbot > /opt/ethvaltgbot/servicelog.log
 ```
