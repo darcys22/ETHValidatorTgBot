@@ -1,13 +1,13 @@
 [Unit]
-Description=TONTgBot
+Description=EthValTgBot
 After=syslog.target
 
 [Service]
 Type=simple
 User=ubuntu
 Group=ubuntu
-ExecStart=/etc/init.d/tontgbot start
-ExecStop=/etc/init.d/tontgbot stop
+ExecStart=/etc/init.d/ethvaltgbot start
+ExecStop=/etc/init.d/ethvaltgbot stop
 
 [Install]
 WantedBy=multi-user.target
