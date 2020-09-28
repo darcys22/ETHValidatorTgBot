@@ -71,8 +71,6 @@ lt_starttime = "\U0001F7E2 " + lt_starttime
 lt_mainmenu = _("Main menu")
 lt_mainmenu =  "\U0001F3E1 " + lt_mainmenu
 #----
-lt_timediff = _("Time Diff")
-lt_timediff =  "\U0000231A " + lt_timediff
 lt_errorsinlogs = _("Error logs")
 lt_errorsinlogs =  "\U0001F4D1 " + lt_errorsinlogs
 lt_validatorinfomenu = _("Info")
@@ -165,14 +163,13 @@ markuplinux.row(mainmenu)
 
 # Validator markup
 markupValidator = types.ReplyKeyboardMarkup()
-timediff = types.KeyboardButton(lt_timediff)
-errorsinlogs = types.KeyboardButton(lt_errorsinlogs)
+#timediff = types.KeyboardButton(lt_timediff)
+#errorsinlogs = types.KeyboardButton(lt_errorsinlogs)
 validatorinfomenu = types.KeyboardButton(lt_validatorinfomenu)
-slowinlogs = types.KeyboardButton(lt_slowinlogs)
-restartvalidnodee = types.KeyboardButton(lt_restartvalidnodee)
+#slowinlogs = types.KeyboardButton(lt_slowinlogs)
+#restartvalidnodee = types.KeyboardButton(lt_restartvalidnodee)
 mainmenu = types.KeyboardButton(lt_mainmenu)
-markupValidator.row(timediff, validatorinfomenu,errorsinlogs,slowinlogs)
-markupValidator.row(restartvalidnodee)
+markupValidator.row(validatorinfomenu)
 markupValidator.row(mainmenu)
 # /Validator markup
 
@@ -595,14 +592,10 @@ def command_disk(message):
   if message.from_user.id == config.tg:
     try:
       disk = str(subprocess.check_output(["df -h -t ext4"], shell = True,encoding='utf-8'))
-      dbsize = str(subprocess.check_output(["du -msh " + config.tw + "/db/ | awk '{print $1}'"], shell = True,encoding='utf-8'))
-      archsize = str(subprocess.check_output(["du -msh " + config.tw + "/archive/ | awk '{print $1}'"], shell = True,encoding='utf-8'))
-      # nodelog = str(subprocess.check_output(["du -msh " + config.tw + "/node.log | awk '{print $1}'"], shell = True,encoding='utf-8'))
+      dbsize = str(subprocess.check_output(["du -msh " + config.blockchainDB + " | awk '{print $1}'"], shell = True,encoding='utf-8'))
       dbsize = _("*Database size:* _") + dbsize + "_"
-      archsize = _("*Archive size:* _") + archsize + "_"
-      # nodelog = _("*Node.log size:* _") + nodelog + "_"
       # bot.send_message(config.tg, text=archsize + dbsize + nodelog + disk, parse_mode="Markdown", reply_markup=markup)
-      bot.send_message(config.tg, text=archsize + dbsize + disk, parse_mode="Markdown", reply_markup=markup)
+      bot.send_message(config.tg, text=dbsize + disk, parse_mode="Markdown", reply_markup=markup)
     except:
       bot.send_message(config.tg, text=_("Can't get disk info"), parse_mode="Markdown", reply_markup=markup)
   else:
@@ -637,40 +630,18 @@ def command_linuxtools(message):
     # pass
 # /Validator tools start
 
-# Time Diff
-@bot.message_handler(func=lambda message: message.text == lt_timediff)
-def command_timediff(message):
-    if message.from_user.id == config.tg:
-        pass
-    # try:
-      # master, slave = pty.openpty()
-      # stdout = None
-      # stderr = None
-      # timediffcmd = "/bin/bash " + config.tf + "scripts/check_node_sync_status.sh | grep TIME_DIFF | awk '{print $4}'"
-      # timediff = subprocess.Popen(timediffcmd, stdin=slave, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, encoding='utf-8', close_fds=True)
-      # outs, errs = timediff.communicate(timeout=2)
-      # os.close(slave)
-      # os.close(master)
-      # bot.send_message(config.tg, text=_("Time Diff is ") + outs, reply_markup=markupValidator)
-      # historygettd("db/timediff.dat",30,_("Difference"),_("Time Diff"),"/tmp/timediff.png",timediffhist)
-    # except:
-      # kill(timediff.pid)
-      # os.close(slave)
-      # os.close(master)
-      # bot.send_message(config.tg, text=_("Time Diff check failed"), reply_markup=markupValidator)
-  # else:
-    # pass
-# /Time Diff
-
 # Info
 @bot.message_handler(func=lambda message: message.text == lt_validatorinfomenu)
 def command_errlog(message):
   if message.from_user.id == config.tg:
     try:
       #errorlog = "tac " + config.tw + "/node.log | grep -n -m 25 -i 'error' > /tmp/node_error.log"
-      bot.send_message(config.tg, text=_("Validator info menu"), reply_markup=markupValidatorInfo)
+      errorlog = "egrep -n -i 'fail|error' " + config.tw + "/node.log | tail -n " + config.elogc + " > /tmp/node_error.log"
+      errorlogf = str(subprocess.call(errorlog, shell = True,encoding='utf-8'))
+      errfile = open('/tmp/node_error.log', 'rb')
+      bot.send_document(config.tg, errfile, reply_markup=markupValidator)
     except:
-      bot.send_message(config.tg, text = _("alidator info menu Error"), reply_markup=markupValidatorInfo)
+      bot.send_message(config.tg, text = _("Validator info menu Error"), reply_markup=markupValidator)
   else:
     pass
 # Info

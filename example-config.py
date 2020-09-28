@@ -6,7 +6,9 @@
 TgBotAPIKey = 'x:y' # API Keythat you get from @BotFather
 tg = 1111 # Your id, you can get it by sending command /id to bot @TONTgIDBot
 
-tw = '/var/lib/teku' # validator and beacon work dir
+tw = '/var/lib/lighthouse' # validator and beacon work dir
+
+beaconChainDB = '/var/lib/lighthouse/beacon-node/beacon/chain_db'
 
 ethvaltgpath = '/home/ubuntu/ethvaltgbot' # User folder with this bot.
 ethvaltgpathdb = '/home/ubuntu/ethvaltgbot/db' # User folder with bot database.

@@ -44,7 +44,7 @@ This bot can only send messages to your telegram id
 ```sh
 $ cd $HOME && git clone -v https://github.com/darcys22/EthValTgBot.git ethvaltgbot && cd ./ethvaltgbot && chmod +x ./installsbot.sh
 ```
- 4. Open ./config.py in any editor and change values from *Edit starts here* till *Edit ends here*. If you dont know your id(tg value), Just send message to @TONTgIDBot in telegram. Then open ./sbot.sh and put user folder at lines 14-15. Open ./tontgbot.service and put user&group at lines 7-8
+ 4. Open ./config.py in any editor and change values from *Edit starts here* till *Edit ends here*. If you dont know your id(tg value), Just send message to @TONTgIDBot in telegram. Then open ./sbot.sh and put user folder at lines 14-15. Open ./ethvaltgbot.service and put user&group at lines 7-8
  
  5. Run 
  ```sh
@@ -54,7 +54,7 @@ $ /bin/bash ./installsbot.sh
 ## Available languages *Yes, with google translate
 Change languages=['en'] in bot.py to language, what you need
   ```sh
-lang_translations = gettext.translation('base', localedir='/opt/tontgbot/locales', languages=['en'])
+lang_translations = gettext.translation('base', localedir='/opt/ethvaltgbot/locales', languages=['en'])
 ```
 
 Language - code
@@ -81,7 +81,7 @@ $ systemctl restart ethvaltgbot.service
 ```
 
 ## What to do if something not working?
-Find in bot.py telebot.logger.setLevel(logging.ERROR) and change ERROR to DEBUG, restart tontgbot service and execute
+Find in bot.py telebot.logger.setLevel(logging.ERROR) and change ERROR to DEBUG, restart ethvaltgbot service and execute
   ```sh
 $ journalctl -e -u ethvaltgbot > /opt/ethvaltgbot/servicelog.log
 ```

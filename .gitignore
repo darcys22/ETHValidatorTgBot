@@ -1,4 +1,3 @@
 config.py
 speedtest-cli
-locales/*
 __pycache__/*
