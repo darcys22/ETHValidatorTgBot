@@ -2961,18 +2961,18 @@ def command_currdiskload(message):
 # Network speed start
 @bot.message_handler(func=lambda message: message.text == lt_spdtst)
 def command_speedtest(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markuplinux)
-  else:
-    pass
+    if message.from_user.id == config.tg:
+        try:
+            bot.send_chat_action(config.tg, "typing")
+            testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
+            testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
+            bot.send_chat_action(config.tg, "upload_photo")
+            testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
+            bot.send_photo(config.tg, testspeedfile, reply_markup=markuplinux)
+        except:
+            bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markuplinux)
+    else:
+        pass
 # Network speed start
 
 
