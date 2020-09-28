@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import os, sys
 import config
+import requests
 import time
 import datetime
 import subprocess
@@ -58,8 +59,6 @@ lt_traceroute = _("Traceroute test")
 lt_traceroute =  "\U0001F9ED " + lt_traceroute
 lt_topproc = _("Top processes")
 lt_topproc =  "\U0001F51D " + lt_topproc
-lt_ssvalid = _("Port check")
-lt_ssvalid =  "\U0001F442\U0001F3FC " + lt_ssvalid
 lt_spdtst = _("Network speed test")
 lt_spdtst =  "\U0001F4E1 " + lt_spdtst
 lt_currntwrkload = _("Current network load")
@@ -83,49 +82,11 @@ lt_currentstake = _("Current stake")
 lt_currentstake =  "\U0001F522 " + lt_currentstake
 lt_updatestake = _("Update stake")
 lt_updatestake = "\U00002195\U0000FE0F " + lt_updatestake
-#----
-lt_andorraspdt =  _("Andorra")
-lt_andorraspdt =  "\U0001F1E6\U0001F1E9 " + lt_andorraspdt
-lt_austriaspdt =  _("Austria")
-lt_austriaspdt =  "\U0001F1E6\U0001F1F9 " + lt_austriaspdt
-lt_belgiumspdt =  _("Belgium")
-lt_belgiumspdt =  "\U0001F1E7\U0001F1EA " + lt_belgiumspdt
-lt_bosherzspdt =  _("Bosnia and Herzegovina")
-lt_bosherzspdt =  "\U0001F1E7\U0001F1E6 " + lt_bosherzspdt
-lt_croatiaspdt =  _("Croatia")
-lt_croatiaspdt =  "\U0001F1ED\U0001F1F7 " + lt_croatiaspdt
-lt_czechrpspdt =  _("Czech Republic")
-lt_czechrpspdt =  "\U0001F1E8\U0001F1FF " + lt_czechrpspdt
-lt_denmarkspdt =  _("Denmark")
-lt_denmarkspdt =  "\U0001F1E9\U0001F1F0 " + lt_denmarkspdt
-lt_francefspdt =  _("France")
-lt_francefspdt =  "\U0001F1EB\U0001F1F7 " + lt_francefspdt
-lt_germanyspdt =  _("Germany")
-lt_germanyspdt =  "\U0001F1E9\U0001F1EA " + lt_germanyspdt
-lt_hungaryspdt =  _("Hungary")
-lt_hungaryspdt =  "\U0001F1ED\U0001F1FA " + lt_hungaryspdt
-lt_italyflspdt =  _("Italy")
-lt_italyflspdt =  "\U0001F1EE\U0001F1F9 " + lt_italyflspdt
-lt_liechtnspdt =  _("Liechtenstein")
-lt_liechtnspdt =  "\U0001F1F1\U0001F1EE " + lt_liechtnspdt
-lt_luxmbrgspdt =  _("Luxembourg")
-lt_luxmbrgspdt =  "\U0001F1F1\U0001F1FA " + lt_luxmbrgspdt
-lt_nthlndsspdt =  _("Netherlands")
-lt_nthlndsspdt =  "\U0001F1F3\U0001F1F1 " + lt_nthlndsspdt
-lt_polandfspdt =  _("Poland")
-lt_polandfspdt =  "\U0001F1F5\U0001F1F1 " + lt_polandfspdt
-lt_serbiafspdt =  _("Serbia")
-lt_serbiafspdt =  "\U0001F1F7\U0001F1F8 " + lt_serbiafspdt
-lt_slovakispdt =  _("Slovakia")
-lt_slovakispdt =  "\U0001F1F8\U0001F1F0 " + lt_slovakispdt
-lt_slovenispdt =  _("Slovenia")
-lt_slovenispdt =  "\U0001F1F8\U0001F1EE " + lt_slovenispdt
-lt_spainflspdt =  _("Spain")
-lt_spainflspdt =  "\U0001F1EA\U0001F1F8 " + lt_spainflspdt
-lt_swtzlndspdt =  _("Switzerland")
-lt_swtzlndspdt =  "\U0001F1E8\U0001F1ED " + lt_swtzlndspdt
-lt_unitedkspdt =  _("United Kingdom")
-lt_unitedkspdt =  "\U0001F1EC\U0001F1E7 " + lt_unitedkspdt
+lt_validatorversion = _("Version")
+lt_validatorsyncing = _("Syncing")
+lt_validatorhealth  = _("Health")
+lt_validatorhead  = _("Head")
+#---
 lt_backlinux =  _("Back to Linux tools")
 lt_backlinux = "\U0001F519 " + lt_backlinux
 lt_backvalidatorm =  _("Back to Validator tools")
@@ -149,13 +110,12 @@ markuplinux = types.ReplyKeyboardMarkup()
 ping = types.KeyboardButton(lt_ping)
 traceroute = types.KeyboardButton(lt_traceroute)
 topproc = types.KeyboardButton(lt_topproc)
-ssvalid = types.KeyboardButton(lt_ssvalid)
 starttime = types.KeyboardButton(lt_starttime)
 spdtst = types.KeyboardButton(lt_spdtst)
 currntwrkload = types.KeyboardButton(lt_currntwrkload)
 currntdiskload = types.KeyboardButton(lt_currntdiskload)
 mainmenu = types.KeyboardButton(lt_mainmenu)
-markuplinux.row(ssvalid,ping,traceroute)
+markuplinux.row(ping,traceroute)
 markuplinux.row(topproc,starttime,spdtst)
 markuplinux.row(currntwrkload,currntdiskload)
 markuplinux.row(mainmenu)
@@ -163,13 +123,12 @@ markuplinux.row(mainmenu)
 
 # Validator markup
 markupValidator = types.ReplyKeyboardMarkup()
-#timediff = types.KeyboardButton(lt_timediff)
-#errorsinlogs = types.KeyboardButton(lt_errorsinlogs)
-validatorinfomenu = types.KeyboardButton(lt_validatorinfomenu)
-#slowinlogs = types.KeyboardButton(lt_slowinlogs)
-#restartvalidnodee = types.KeyboardButton(lt_restartvalidnodee)
+validatorversion = types.KeyboardButton(lt_validatorversion)
+validatorsyncing= types.KeyboardButton(lt_validatorsyncing)
+validatorhealth= types.KeyboardButton(lt_validatorhealth)
+validatorhead= types.KeyboardButton(lt_validatorhead)
 mainmenu = types.KeyboardButton(lt_mainmenu)
-markupValidator.row(validatorinfomenu)
+markupValidator.row(validatorversion,validatorsyncing,validatorhealth,validatorhead)
 markupValidator.row(mainmenu)
 # /Validator markup
 
@@ -179,37 +138,6 @@ mainmenu = types.KeyboardButton(lt_mainmenu)
 backvalidatorm = types.KeyboardButton(lt_backvalidatorm)
 markupValidatorInfo.row(backvalidatorm,mainmenu)
 # /Validator Info markup
-
-# Speedtest markup
-markupspeedtest = types.ReplyKeyboardMarkup()
-andorraspdt = types.KeyboardButton(lt_andorraspdt)
-austriaspdt = types.KeyboardButton(lt_austriaspdt)
-belgiumspdt = types.KeyboardButton(lt_belgiumspdt)
-bosherzspdt = types.KeyboardButton(lt_bosherzspdt)
-croatiaspdt = types.KeyboardButton(lt_croatiaspdt)
-czechrpspdt = types.KeyboardButton(lt_czechrpspdt)
-denmarkspdt = types.KeyboardButton(lt_denmarkspdt)
-francefspdt = types.KeyboardButton(lt_francefspdt)
-germanyspdt = types.KeyboardButton(lt_germanyspdt)
-hungaryspdt = types.KeyboardButton(lt_hungaryspdt)
-italyflspdt = types.KeyboardButton(lt_italyflspdt)
-liechtnspdt = types.KeyboardButton(lt_liechtnspdt)
-luxmbrgspdt = types.KeyboardButton(lt_luxmbrgspdt)
-nthlndsspdt = types.KeyboardButton(lt_nthlndsspdt)
-polandfspdt = types.KeyboardButton(lt_polandfspdt)
-serbiafspdt = types.KeyboardButton(lt_serbiafspdt)
-slovakispdt = types.KeyboardButton(lt_slovakispdt)
-slovenispdt = types.KeyboardButton(lt_slovenispdt)
-spainflspdt = types.KeyboardButton(lt_spainflspdt)
-swtzlndspdt = types.KeyboardButton(lt_swtzlndspdt)
-unitedkspdt = types.KeyboardButton(lt_unitedkspdt)
-backlinux = types.KeyboardButton(lt_backlinux)
-mainmenu = types.KeyboardButton(lt_mainmenu)
-markupspeedtest.row(andorraspdt,austriaspdt,belgiumspdt,bosherzspdt,croatiaspdt,czechrpspdt,denmarkspdt)
-markupspeedtest.row(francefspdt,germanyspdt,hungaryspdt,italyflspdt,liechtnspdt,luxmbrgspdt,nthlndsspdt)
-markupspeedtest.row(polandfspdt,serbiafspdt,slovakispdt,slovenispdt,spainflspdt,swtzlndspdt,unitedkspdt)
-markupspeedtest.row(backlinux,mainmenu)
-# /Speedtest markup
 
 # Get id for tg value
 @bot.message_handler(commands=["id"])
@@ -593,8 +521,7 @@ def command_disk(message):
     try:
       disk = str(subprocess.check_output(["df -h -t ext4"], shell = True,encoding='utf-8'))
       dbsize = str(subprocess.check_output(["du -msh " + config.blockchainDB + " | awk '{print $1}'"], shell = True,encoding='utf-8'))
-      dbsize = _("*Database size:* _") + dbsize + "_"
-      # bot.send_message(config.tg, text=archsize + dbsize + nodelog + disk, parse_mode="Markdown", reply_markup=markup)
+      dbsize = _("*Beaconchain Database size:* _") + dbsize + "_"
       bot.send_message(config.tg, text=dbsize + disk, parse_mode="Markdown", reply_markup=markup)
     except:
       bot.send_message(config.tg, text=_("Can't get disk info"), parse_mode="Markdown", reply_markup=markup)
@@ -609,75 +536,62 @@ def command_disk(message):
 @bot.message_handler(func=lambda message: message.text in (lt_validatortools,lt_backvalidatorm))
 def command_linuxtools(message):
     if message.from_user.id == config.tg:
-        # try:
-      # master, slave = pty.openpty()
-      # stdout = None
-      # stderr = None
-      # totalcheckvalidtrs =  liteclcmd + "'getconfig 34' | grep cur_validators | awk -F':| ' {'print $6,$8,$10'}"
-      # totalshards =  liteclcmd + "'allshards' | grep 'shard #' | wc -l"
-      # totalcheckvalidtrs = subprocess.Popen(totalcheckvalidtrs + " ; " + totalshards, stdin=slave, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, encoding='utf-8', close_fds=True)
-      # stdout, stderr = totalcheckvalidtrs.communicate(timeout=2)
-      # stdoutlst = stdout.split()
-      # os.close(slave)
-      # os.close(master)
-      # bot.send_message(config.tg, text="\U0001F48E " + _("You are welcome") + " \U0001F48E \n" + _("Workchain shards ") + str(stdoutlst[3]) + " \U0001F537\n" + _("Now: Total validators ") + str(stdoutlst[2]) + _("\nValidators Since ") + str(datetime.datetime.fromtimestamp(int(stdoutlst[0])).strftime('%B/%d %H:%M:%S')) + _("\nValidators Until ") + str(datetime.datetime.fromtimestamp(int(stdoutlst[1])).strftime('%B/%d %H:%M:%S')), reply_markup=markupValidator)
-    # except Exception as i:
-      # kill(totalcheckvalidtrs.pid)
-      # os.close(slave)
-      # os.close(master)
-        bot.send_message(config.tg, text="\U0001F48E " + _("You are welcome") + " \U0001F48E", reply_markup=markupValidator)
-  # else:
-    # pass
+        bot.send_message(config.tg, text= _("Validator Tools"), reply_markup=markupValidator)
+    else:
+        pass
 # /Validator tools start
 
-# Info
-@bot.message_handler(func=lambda message: message.text == lt_validatorinfomenu)
+# Version
+@bot.message_handler(func=lambda message: message.text == lt_validatorversion)
 def command_errlog(message):
   if message.from_user.id == config.tg:
     try:
-      #errorlog = "tac " + config.tw + "/node.log | grep -n -m 25 -i 'error' > /tmp/node_error.log"
-      errorlog = "egrep -n -i 'fail|error' " + config.tw + "/node.log | tail -n " + config.elogc + " > /tmp/node_error.log"
-      errorlogf = str(subprocess.call(errorlog, shell = True,encoding='utf-8'))
-      errfile = open('/tmp/node_error.log', 'rb')
-      bot.send_document(config.tg, errfile, reply_markup=markupValidator)
+        r = requests.get(config.beaconAPI+"/node/version")
+        bot.send_message(config.tg, text=r.text, reply_markup=markupValidator)
     except:
-      bot.send_message(config.tg, text = _("Validator info menu Error"), reply_markup=markupValidator)
+        bot.send_message(config.tg, text=_("Can't get Version"), parse_mode="Markdown", reply_markup=markupValidator)
   else:
     pass
-# Info
+# /Version
 
-# Error logs
-@bot.message_handler(func=lambda message: message.text == lt_errorsinlogs)
+# Syncing
+@bot.message_handler(func=lambda message: message.text == lt_validatorsyncing)
 def command_errlog(message):
   if message.from_user.id == config.tg:
     try:
-      #errorlog = "tac " + config.tw + "/node.log | grep -n -m 25 -i 'error' > /tmp/node_error.log"
-      errorlog = "egrep -n -i 'fail|error' " + config.tw + "/node.log | tail -n " + config.elogc + " > /tmp/node_error.log"
-      errorlogf = str(subprocess.call(errorlog, shell = True,encoding='utf-8'))
-      errfile = open('/tmp/node_error.log', 'rb')
-      bot.send_document(config.tg, errfile, reply_markup=markupValidator)
+        r = requests.get(config.beaconAPI+"/node/syncing")
+        bot.send_message(config.tg, text=r.text, reply_markup=markupValidator)
     except:
-      bot.send_document(config.tg, text = _("Can't get error log"), reply_markup=markupValidator)
+        bot.send_message(config.tg, text=_("Can't get Syncing"), parse_mode="Markdown", reply_markup=markupValidator)
   else:
     pass
-# /Error logs
+# /Syncing
 
-# Slow logs
-@bot.message_handler(func=lambda message: message.text == lt_slowinlogs)
-def command_slowlog(message):
+# Health
+@bot.message_handler(func=lambda message: message.text == lt_validatorhealth)
+def command_errlog(message):
   if message.from_user.id == config.tg:
     try:
-      #slowlog = "tac " + config.tw + "/node.log | grep -n -m 25 -i 'error' > /tmp/node_slow.log"
-      slowlog = "grep -n -i 'slow' " + config.tw + "/node.log | tail -n " + config.slogc + " > /tmp/node_slow.log"
-      slowlogf = str(subprocess.call(slowlog, shell = True,encoding='utf-8'))
-      slwfile = open('/tmp/node_slow.log', 'rb')
-      bot.send_document(config.tg, slwfile, reply_markup=markupValidator)
-      historygetslowlog("db/slowlog.dat",30,_("Delay, ms"),_("Slow events"),"/tmp/slowlog.png",slowloghist)
+        r = requests.get(config.beaconAPI+"/node/health")
+        bot.send_message(config.tg, text=r.text, reply_markup=markupValidator)
     except:
-      bot.send_document(config.tg, text = _("Can't get slow log"), reply_markup=markupValidator)
+        bot.send_message(config.tg, text=_("Can't get health"), parse_mode="Markdown", reply_markup=markupValidator)
   else:
     pass
-# /Slow logs
+# /Health
+
+# Head
+@bot.message_handler(func=lambda message: message.text == lt_validatorhead)
+def command_errlog(message):
+  if message.from_user.id == config.tg:
+    try:
+        r = requests.get(config.beaconAPI+"/beacon/head")
+        bot.send_message(config.tg, text=r.text, reply_markup=markupValidator)
+    except:
+        bot.send_message(config.tg, text=_("Can't get health"), parse_mode="Markdown", reply_markup=markupValidator)
+  else:
+    pass
+# /Head
 
 # Validators Info tools
 #######################################################
@@ -2927,20 +2841,6 @@ def command_linuxtools(message):
     pass
 # /Linux tools start
 
-# Validator ports listen check
-@bot.message_handler(func=lambda message: message.text == lt_ssvalid)
-def command_timediff(message):
-  if message.from_user.id == config.tg:
-    try:
-      ssvalidator = "ss -tlunp4 | grep -i 'validator'"
-      ssvalidator = str(subprocess.check_output(ssvalidator, shell = True,encoding='utf-8'))
-      bot.send_message(config.tg, text=ssvalidator, reply_markup=markuplinux)
-    except:
-      bot.send_message(config.tg, text=_("Can't check validator port listening"), reply_markup=markuplinux)
-  else:
-    pass
-# /Validator ports listen check
-
 # Ping test
 @bot.message_handler(func=lambda message: message.text == lt_ping)
 def command_pingcheck(message):
@@ -3062,367 +2962,19 @@ def command_currdiskload(message):
 @bot.message_handler(func=lambda message: message.text == lt_spdtst)
 def command_speedtest(message):
   if message.from_user.id == config.tg:
-    bot.send_message(config.tg, text=_("Check server network speed. ") + "\U0001F4E1", reply_markup=markupspeedtest)
+    try:
+      bot.send_chat_action(config.tg, "typing")
+      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
+      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
+      bot.send_chat_action(config.tg, "upload_photo")
+      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
+      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
+    except:
+      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markuplinux)
   else:
     pass
 # Network speed start
 
-# Network speed Andorra
-@bot.message_handler(func=lambda message: message.text == lt_andorraspdt)
-def command_testspeed_andorra(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 2530 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Andorra
-
-# Network speed Austria
-@bot.message_handler(func=lambda message: message.text == lt_austriaspdt)
-def command_testspeed_austria(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 12390 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Austria
-
-# Network speed Belgium
-@bot.message_handler(func=lambda message: message.text == lt_belgiumspdt)
-def command_testspeed_belgium(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 5151 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Belgium
-
-# Network speed Bosnia and Herzegovina
-@bot.message_handler(func=lambda message: message.text == lt_bosherzspdt)
-def command_testspeed_bosnia_herzegovina(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 1341 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Bosnia and Herzegovina
-
-# Network speed Croatia
-@bot.message_handler(func=lambda message: message.text == lt_croatiaspdt)
-def command_testspeed_croatia(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 2136 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Croatia
-
-# Network speed Czech Republic
-@bot.message_handler(func=lambda message: message.text == lt_czechrpspdt)
-def command_testspeed_czech_republic(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 4162 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Czech Republic
-
-# Network speed Denmark
-@bot.message_handler(func=lambda message: message.text == lt_denmarkspdt)
-def command_testspeed_denmark(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 9062 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Denmark
-
-# Network speed France
-@bot.message_handler(func=lambda message: message.text == lt_francefspdt)
-def command_testspeed_france(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 24386 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed France
-
-# Network speed Germany
-@bot.message_handler(func=lambda message: message.text == lt_germanyspdt)
-def command_testspeed_germany(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 28622 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Germany
-
-# Network speed Hungary
-@bot.message_handler(func=lambda message: message.text == lt_hungaryspdt)
-def command_testspeed_hungary(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 1697 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Hungary
-
-# Network speed Italy
-@bot.message_handler(func=lambda message: message.text == lt_italyflspdt)
-def command_testspeed_italy(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 11842 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Italy
-
-# Network speed Liechtenstein
-@bot.message_handler(func=lambda message: message.text == lt_liechtnspdt)
-def command_testspeed_liechtenstein(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 20255 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Liechtenstein
-
-# Network speed Luxembourg
-@bot.message_handler(func=lambda message: message.text == lt_luxmbrgspdt)
-def command_testspeed_luxembourg(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 4769 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Luxembourg
-
-# Network speed Netherlands
-@bot.message_handler(func=lambda message: message.text == lt_nthlndsspdt)
-def command_testspeed_netherlands(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 20005 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Netherlands
-
-# Network speed Poland
-@bot.message_handler(func=lambda message: message.text == lt_polandfspdt)
-def command_testspeed_poland(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 5326 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Poland
-
-# Network speed Serbia
-@bot.message_handler(func=lambda message: message.text == lt_serbiafspdt)
-def command_testspeed_serbia(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 3800 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Serbia
-
-# Network speed Slovakia
-@bot.message_handler(func=lambda message: message.text == lt_slovakispdt)
-def command_testspeed_slovakia(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 7069 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Slovakia
-
-# Network speed Slovenia
-@bot.message_handler(func=lambda message: message.text == lt_slovenispdt)
-def command_testspeed_slovenia(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 3560 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Slovenia
-
-# Network speed Spain
-@bot.message_handler(func=lambda message: message.text == lt_spainflspdt)
-def command_testspeed_spain(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 14979 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Spain
-
-# Network speed Switzerland
-@bot.message_handler(func=lambda message: message.text == lt_swtzlndspdt)
-def command_testspeed_switzerland(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 24389 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed Switzerland
-
-# Network speed United Kingdom
-@bot.message_handler(func=lambda message: message.text == lt_unitedkspdt)
-def command_testspeed_uk(message):
-  if message.from_user.id == config.tg:
-    try:
-      bot.send_chat_action(config.tg, "typing")
-      testspeedcmd = "python3 " + config.ethvaltgpath + "/speedtest-cli --share --server 11123 | grep -i 'Share results' | awk '{print $3}' | wget -i - -O /tmp/speedtestcheck.png"
-      testspeed =str(subprocess.call(testspeedcmd, shell = True,encoding='utf-8'))
-      bot.send_chat_action(config.tg, "upload_photo")
-      testspeedfile = open('/tmp/speedtestcheck.png', 'rb')
-      bot.send_photo(config.tg, testspeedfile, reply_markup=markupspeedtest)
-    except:
-      bot.send_message(config.tg, text=_("Network speed test check failed"), reply_markup=markupspeedtest)
-  else:
-    pass
-# Network speed United Kingdom
 
 # Back to linux tools
 @bot.message_handler(func=lambda message: message.text == lt_backlinux)

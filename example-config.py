@@ -8,17 +8,17 @@ tg = 1111 # Your id, you can get it by sending command /id to bot @TONTgIDBot
 
 tw = '/var/lib/lighthouse' # validator and beacon work dir
 
-beaconChainDB = '/var/lib/lighthouse/beacon-node/beacon/chain_db'
+blockchainDB = '/var/lib/lighthouse/beacon-node/beacon/chain_db'
+
+beaconAPI= 'http://localhost:5052'
 
 ethvaltgpath = '/home/ubuntu/ethvaltgbot' # User folder with this bot.
 ethvaltgpathdb = '/home/ubuntu/ethvaltgbot/db' # User folder with bot database.
+
 # Edit ends here
 
 
 # Other
-elogc = '250' # Row count for the error log
-slogc = '250' # Row count for the slow log
-
 srvping = '1.1.1.1' # Ping test server
 traceroutetest = '1.1.1.1' # Traceroute test server
 
@@ -45,4 +45,4 @@ cfgmonitoringslowlog = 0 # Slow log Monitopring
 
 
 
-# ##### /TONTgBot Config
+# ##### /EthValTGBot Config
