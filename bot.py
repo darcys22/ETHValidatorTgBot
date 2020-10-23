@@ -546,7 +546,7 @@ def command_linuxtools(message):
 def command_errlog(message):
   if message.from_user.id == config.tg:
     try:
-        r = requests.get(config.beaconAPI+"/node/version")
+        r = requests.get(config.beaconAPI+"/eth/v1/node/version")
         bot.send_message(config.tg, text=r.text, reply_markup=markupValidator)
     except:
         bot.send_message(config.tg, text=_("Can't get Version"), parse_mode="Markdown", reply_markup=markupValidator)
@@ -559,7 +559,7 @@ def command_errlog(message):
 def command_errlog(message):
   if message.from_user.id == config.tg:
     try:
-        r = requests.get(config.beaconAPI+"/node/syncing")
+        r = requests.get(config.beaconAPI+"/eth/v1/node/syncing")
         bot.send_message(config.tg, text=r.text, reply_markup=markupValidator)
     except:
         bot.send_message(config.tg, text=_("Can't get Syncing"), parse_mode="Markdown", reply_markup=markupValidator)
@@ -572,7 +572,7 @@ def command_errlog(message):
 def command_errlog(message):
   if message.from_user.id == config.tg:
     try:
-        r = requests.get(config.beaconAPI+"/node/health")
+        r = requests.get(config.beaconAPI+"/eth/v1/node/health")
         bot.send_message(config.tg, text=r.text, reply_markup=markupValidator)
     except:
         bot.send_message(config.tg, text=_("Can't get health"), parse_mode="Markdown", reply_markup=markupValidator)
@@ -585,7 +585,7 @@ def command_errlog(message):
 def command_errlog(message):
   if message.from_user.id == config.tg:
     try:
-        r = requests.get(config.beaconAPI+"/beacon/head")
+        r = requests.get(config.beaconAPI+"/eth/v1/beacon/headers")
         bot.send_message(config.tg, text=r.text, reply_markup=markupValidator)
     except:
         bot.send_message(config.tg, text=_("Can't get health"), parse_mode="Markdown", reply_markup=markupValidator)
