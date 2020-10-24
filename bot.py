@@ -85,6 +85,7 @@ lt_updatestake = "\U00002195\U0000FE0F " + lt_updatestake
 lt_validatorversion = _("Version")
 lt_validatorsyncing = _("Syncing")
 lt_validatorhealth  = _("Health")
+lt_listvalidator  = _("Validators")
 lt_validatorhead  = _("Head")
 #---
 lt_backlinux =  _("Back to Linux tools")
@@ -127,8 +128,10 @@ validatorversion = types.KeyboardButton(lt_validatorversion)
 validatorsyncing= types.KeyboardButton(lt_validatorsyncing)
 validatorhealth= types.KeyboardButton(lt_validatorhealth)
 validatorhead= types.KeyboardButton(lt_validatorhead)
+validatorlist= types.KeyboardButton(lt_listvalidator)
 mainmenu = types.KeyboardButton(lt_mainmenu)
 markupValidator.row(validatorversion,validatorsyncing,validatorhealth,validatorhead)
+markupValidator.row(validatorlist)
 markupValidator.row(mainmenu)
 # /Validator markup
 
@@ -592,6 +595,19 @@ def command_errlog(message):
   else:
     pass
 # /Head
+
+# Validator List
+@bot.message_handler(func=lambda message: message.text == lt_listvalidator)
+def command_errlog(message):
+  if message.from_user.id == config.tg:
+    try:
+        r = requests.get(config.validatorAPI+"/lighthouse/validators", headers={'Authorization': 'Basic %s' % config.apitoken})
+        bot.send_message(config.tg, text=r.text, reply_markup=markupValidator)
+    except:
+        bot.send_message(config.tg, text=_("Can't get validator list"), parse_mode="Markdown", reply_markup=markupValidator)
+  else:
+    pass
+# /Validator List
 
 # Validators Info tools
 #######################################################

@@ -11,6 +11,9 @@ tw = '/var/lib/lighthouse' # validator and beacon work dir
 blockchainDB = '/var/lib/lighthouse/beacon-node/beacon/chain_db'
 
 beaconAPI= 'http://localhost:5052'
+validatorAPI= 'http://localhost:5062'
+
+apitoken= ''
 
 ethvaltgpath = '/home/ubuntu/ethvaltgbot' # User folder with this bot.
 ethvaltgpathdb = '/home/ubuntu/ethvaltgbot/db' # User folder with bot database.
